@@ -1,0 +1,12 @@
+How It Works
+As you can see, this example is very similar to the one for the public key-based recipient, with only a few differences.
+
+The first difference is, because you are using a symmetric key rather than an asymmetric one, the key has no certificates associated with it. To make things easy, you use the KeyGenerator class to create the key, but ordinarily you might instead fetch the key from some type of keystore. As far as the choice of algorithm goes, in this case you are using a Triple-DES key, but there are also wrapping algorithms defined for RC2 and AES, so either of those two would work as well. It is largely up to the recipient, but remember, if you are mixing key-wrapping methods, the weakest recipient is also the weakest link in security. Likewise, when you are dealing with a group of recipients, the minimum level of security any of the recipients is willing to accept is the minimum level required for the keys of all recipients.
+
+The next difference is in the manner the entry is added to the generator:edGen.addKEKRecipient(key, kekID);
+
+In this case, rather than using identifying information gained from a certificate, the key is identified using the byte array referenced by keyID. As you can imagine, in a real-life situation, this would also be information that would need to be known to the recipient.
+
+You can see that by taking advantage of the RecipientInformationStore class, the code for looking up a recipient is identical to the public key-based recipient. Likewise, if you wanted to, you could iterate through the recipients instead to find the one you want. It all depends on how you want to do it.
+
+The last content type you will look at in CMS is the one used for creating compressed-data content. Although it is not directly related to cryptography, it can be quite useful and is included as a content type in S/MIME.
